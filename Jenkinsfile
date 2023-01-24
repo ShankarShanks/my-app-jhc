@@ -11,13 +11,23 @@ pipeline {
     stage('Deploy to Dev Tomcat') {
       steps {
         tomcatDeploy('172.31.9.112','app','tomcat-dev')
+        
+@Library("mylibs") _
+pipeline {
+  agent any
+  tools {
+    maven 'maven2'
+  }
+  stages{
+    stage("Maven Build"){
+      steps{
+        sh "mvn clean package"
       }
     }
-  }
-  post {
-    success {
-      archiveArtifacts artifacts: 'target/*.war'
-      cleanWs()
+    stage("Deploy To Dev"){
+      steps{
+        tomcatDeploy("tomcat-dev","ec2-user",["172.31.13.89","172.31.13.89"])
+      }
     }
   }
 }
