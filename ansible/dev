@@ -1,2 +1,2 @@
 [apache]
-172.31.46.207 ansible_user=ec2-user
+172.31.94.178 ansible_user=ec2-user
